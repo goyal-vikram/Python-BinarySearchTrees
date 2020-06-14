@@ -98,7 +98,11 @@ class binary_search_tree:
             x = self.right.check_binary_search_tree(list_out, x)
         
         return x
-    
+
+    """ Function to balance the tree. The function balance_tree writes the node of tree into a list object named list_out.
+        That object is passed to another function tree_balancer, which splits the input list recursively into two halves and
+        saves the middle list item as the current sub-tree's data.
+    """
     def balance_tree(self):
         list_out = []
         self.inorder_traversal(list_out)
@@ -125,6 +129,39 @@ class binary_search_tree:
         if len(right_list):
             self.right = binary_search_tree(None)
             self.right.tree_balancer(right_list)
+    
+    """ Function to create mirror image of the tree. Note that the resultant tree will not be a Binary Search Tree,
+        but it will be return elements in reverse order if done inorder traversal.
+        For example the tree           10       will return the output          10
+                                      /  \                                     /  \
+                                    8     14                                 14    8
+                                   /     /  \                               /  \    \
+                                  4    12    16                           16    12   4
+    """
+    def tree_mirror(self):
+        if self.left:
+            self.left.tree_mirror()
+        
+        if self.right:
+            self.right.tree_mirror()
+        
+        self.left, self.right = self.right, self.left
+    
+    """ Function to count the number of leaf nodes in a tree i.e. nodes with no child nodes.
+    """
+    def leaf_count(self):
+        if self.left == None and self.right == None:
+            return 1
+        
+        x = y = 0
+        
+        if self.left:
+            x = self.left.leaf_count()
+        
+        if self.right:
+            y = self.right.leaf_count()
+        
+        return x + y
 
 """ Test script for various functions
 """
@@ -165,3 +202,11 @@ print(list_out)
 dict_out = dict()
 t1.diagonal_traversal(dict_out, 0)
 print(dict_out)
+
+t1.tree_mirror()
+dict_out = dict()
+t1.diagonal_traversal(dict_out, 0)
+print(dict_out)
+
+x = t1.leaf_count()
+print(x)
