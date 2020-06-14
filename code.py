@@ -83,11 +83,52 @@ class binary_search_tree:
     
     """ Function to check if this tree is a Binary Search Tree or not
     """
-    def check_binary_search_tree(self):
-        pass
+    def check_binary_search_tree(self, list_out, x):
+        if self.left:
+            x = self.left.check_binary_search_tree(list_out, x)
+        
+        list_out.append(self.data)
+        
+        if len(list_out) > 1:
+            if list_out[-1] < list_out[-2]:
+                x = 'The tree is not a Binary Search Tree'
+                return x
+        
+        if self.right:
+            x = self.right.check_binary_search_tree(list_out, x)
+        
+        return x
+    
+    def balance_tree(self):
+        list_out = []
+        self.inorder_traversal(list_out)
+        tree_temp = binary_search_tree(None)
+        tree_temp.tree_balancer(list_out)
+        return tree_temp
+    
+    def tree_balancer(self, list_out):
+        if len(list_out) == 0:
+            return
+        
+        if len(list_out) == 1:
+            self.data = list_out[0]
+            return
+        
+        self.data = list_out[int(len(list_out)/2)]
+        left_list = list_out[:int(len(list_out)/2)]
+        right_list = list_out[int(len(list_out)/2+1):]
+        
+        if len(left_list):
+            self.left = binary_search_tree(None)
+            self.left.tree_balancer(left_list)
+        
+        if len(right_list):
+            self.right = binary_search_tree(None)
+            self.right.tree_balancer(right_list)
 
-t1 = binary_search_tree()
-
+""" Test script for various functions
+"""
+t1 = binary_search_tree(1)
 t1.insert_sorted(23)
 t1.insert_sorted(56)
 t1.insert_sorted(67)
@@ -105,6 +146,20 @@ print(list_out)
 
 list_out = []
 t1.postorder_traversal(list_out)
+print(list_out)
+
+dict_out = dict()
+t1.diagonal_traversal(dict_out, 0)
+print(dict_out)
+
+x = 'The tree is Binary Search Tree'
+list_out = []
+x = t1.check_binary_search_tree(list_out, x)
+print(x)
+
+t1 = t1.balance_tree()
+list_out = []
+t1.preorder_traversal(list_out)
 print(list_out)
 
 dict_out = dict()
