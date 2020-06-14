@@ -80,7 +80,7 @@ class binary_search_tree:
         
         if self.right:
             self.right.diagonal_traversal(dict_out, d)
-
+    
     """ Function to check if this tree is a Binary Search Tree or not
     """
     def check_binary_search_tree(self):
