@@ -59,7 +59,7 @@ class binary_search_tree:
         
         if self.right:
             self.right.postorder_traversal(list_out)
-    
+        
         list_out.append(self.data)
     
     """ Function to return the tree nodes in a dictionary object named dict_out after diagonal travesal.
@@ -72,12 +72,12 @@ class binary_search_tree:
     def diagonal_traversal(self, dict_out, d):
         if self.left:
             self.left.diagonal_traversal(dict_out, d + 1)
-
+        
         try:
             dict_out[d].append(self.data)
         except KeyError:
             dict_out[d] = [self.data]
-
+        
         if self.right:
             self.right.diagonal_traversal(dict_out, d)
 
